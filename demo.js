@@ -6,7 +6,7 @@
 
   results_tmpl = '{{#results}}\n<table class="result">\n  <tr>\n    <td>password: </td>\n    <td colspan="2"><strong>{{password}}</strong></td>\n  </tr>\n  <tr>\n    <td>guesses_log2: </td>\n    <td colspan="2">{{guesses_log2}}</td>\n  </tr>\n  <tr>\n    <td>score: </td>\n    <td>{{score}} / 4</td>\n  <tr>\n    <td>function runtime (ms): </td>\n    <td colspan="2">{{calc_time}}</td>\n  </tr>\n  <tr>\n    <td colspan="3">guess times:</td>\n  </tr>\n  {{& guess_times_display}}\n  {{& feedback_display }}\n  <tr>\n    <td colspan="3"><strong>match sequence:</strong></td>\n  </tr>\n</table>\n{{& sequence_display}}\n{{/results}}';
 
-  guess_times_tmpl = '<tr>\n  <td>100 / hour:</td>\n  <td>{{online_throttling_100_per_hour}}</td>\n  <td> (throttled online attack)</td>\n</tr>\n<tr>\n  <td>10&nbsp; / second:</td>\n  <td>{{online_no_throttling_10_per_second}}</td>\n  <td> (unthrottled online attack)</td>\n</tr>\n<tr>\n  <td>10k / second:</td>\n  <td>{{offline_slow_hashing_1e4_per_second}}</td>\n  <td> (offline attack, slow hash, many cores)</td>\n<tr>\n  <td>10B / second:</td>\n  <td>{{offline_fast_hashing_1e10_per_second}}</td>\n  <td> (offline attack, fast hash, many cores)</td>\n</tr>';
+  guess_times_tmpl = '<tr>\n  <tr>\n  <td>10k / second:</td>\n  <td>{{offline_slow_hashing_1e4_per_second}}</td>\n  <td> (offline attack, slow hash, many cores)</td>\n<tr>\n  <td>10B / second:</td>\n  <td>{{offline_fast_hashing_1e10_per_second}}</td>\n  <td> (offline attack, fast hash, many cores)</td>\n</tr>';
 
   feedback_tmpl = '{{#warning}}\n<tr>\n  <td>warning: </td>\n  <td colspan="2">{{warning}}</td>\n</tr>\n{{/warning}}\n{{#has_suggestions}}\n<tr>\n  <td style="vertical-align: top">suggestions:</td>\n  <td colspan="2">\n    {{#suggestions}}\n    - {{.}} <br />\n    {{/suggestions}}\n  </td>\n</tr>\n{{/has_suggestions}}';
 
@@ -17,14 +17,13 @@
   };
 
   round_logs = function(r) {
-    console.log('r: ' + JSON.stringify(r, null, 2));
     var i, len, m, ref, results1;
-    r.guesses_log2 = round_to_x_digits(r.guesses_log2, 5);
+    r.guesses_log2 = round_to_x_digits(r.guesses_log2, 2);
     ref = r.sequence;
     results1 = [];
     for (i = 0, len = ref.length; i < len; i++) {
       m = ref[i];
-      results1.push(m.guesses_log2 = round_to_x_digits(m.guesses_log2, 5));
+      results1.push(m.guesses_log2 = round_to_x_digits(m.guesses_log2, 2));
     }
     return results1;
   };
